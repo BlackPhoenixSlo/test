@@ -5,9 +5,11 @@ from langchain.memory import ConversationBufferWindowMemory
 from playsound import playsound
 import requests
 from langchain import OpenAI, LLMChain, PromptTemplate
+import os
 
 load_dotenv(find_dotenv())
 embeddings = OpenAIEmbeddings()
+ELEVEN_LABS_API_KEY = os.environ["ELEVEN_LABS_API_KEY"]
 
 def get_response_from_ai(human_input):
     template = """
@@ -46,11 +48,11 @@ def get_voice_response(message):
             "stability": 0,
             "similarity_boost": 0
         }
-     }   
+     }       
     
     headers = {
         'accept': 'audio/mpeg',
-        'xi-api-key': '24061bc89914b6ae6235e49e35a80ac3',
+        'xi-api-key': ELEVEN_LABS_API_KEY,
         'Content-Type': 'application/json'
     }
 
