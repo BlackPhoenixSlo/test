@@ -11,7 +11,7 @@ embeddings = OpenAIEmbeddings()
 
 def get_voice_response(message):
     payload = {        
-        "text": "hi, I'm Shirley, nice meeting you!!",
+        "text": message,
         "model_id": "eleven_monolingual_v1",
         "voice_settings": {
             "stability": 0,
@@ -26,8 +26,9 @@ def get_voice_response(message):
     }
 
     response = requests.post('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM?optimize_streaming_latency=0', json=payload, headers=headers)
-    if response.status_code == 200 and response.content:
-        
+    if response.status_code == 200 and response.content:               
+        with open('audio.mp3', 'wb') as f:
+            f.write(response.content)
         playsound('audio.mp3')
         return response.content
 
@@ -64,3 +65,25 @@ def send_message(human_input):
     message = get_response_from_ai(human_input)
     print(message)
     get_voice_response(message)
+
+
+
+# add GUI
+from flask import Flask, render_template, request
+from functools import partial
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    human_input = request.form['input_message']
+    message = get_response_from_ai(human_input)
+    get_voice_response(message)
+    return message
+
+if __name__ == '__main__':
+    app.run()
