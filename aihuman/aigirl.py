@@ -10,7 +10,7 @@ import os
 load_dotenv(find_dotenv())
 embeddings = OpenAIEmbeddings()
 ELEVEN_LABS_API_KEY = os.environ["ELEVEN_LABS_API_KEY"]
-
+ 
 def get_response_from_ai(human_input):
     template = """
     you are as a role of my girlfriend, now lets playing following these requirement:
@@ -89,4 +89,4 @@ def send_message():
     return message
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=8000)
