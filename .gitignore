@@ -92,3 +92,4 @@ target/
 
 # Models
 .bin
+aihuman/audio.mp3

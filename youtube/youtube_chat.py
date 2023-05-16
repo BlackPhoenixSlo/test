@@ -40,7 +40,7 @@ def get_response_from_query(db, query, k=4):
 
     # Template to use for the system message prompt
     template = """
-        You are a helpful assistant that that can answer questions about youtube videos 
+        You are a helpful assistant that can answer questions about youtube videos 
         based on the video's transcript: {docs}
         
         Only use the factual information from the transcript to answer the question.
