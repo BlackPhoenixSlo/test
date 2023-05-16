@@ -2,6 +2,8 @@ python-dotenv
 langchain
 openai
 playsound
+pygobject
+Flask
 # google-api-python-client # Google API
 # google-search-results # SerpAPI
 # youtube-transcript-api
