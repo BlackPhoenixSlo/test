@@ -1,1 +1,1 @@
-web: python aigirl.py
+web: python aihuman aigirl.py
