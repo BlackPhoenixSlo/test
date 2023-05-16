@@ -63,7 +63,6 @@ def get_voice_response(message):
         playsound('audio.mp3')
         return response.content
 
-
 def send_message(human_input):
     message = get_response_from_ai(human_input)
     print(message)
