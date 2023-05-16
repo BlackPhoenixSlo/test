@@ -2,7 +2,7 @@ python-dotenv
 langchain
 openai
 playsound
-pygobject
+pygobject==3.40.1
 Flask
 # google-api-python-client # Google API
 # google-search-results # SerpAPI
