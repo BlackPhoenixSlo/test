@@ -6,6 +6,10 @@ from playsound import playsound
 import requests
 from langchain import OpenAI, LLMChain, PromptTemplate
 import os
+from pydub import AudioSegment
+from pydub.playback import play
+
+
 
 load_dotenv(find_dotenv())
 embeddings = OpenAIEmbeddings()
@@ -60,7 +64,8 @@ def get_voice_response(message):
     if response.status_code == 200 and response.content:               
         with open('audio.mp3', 'wb') as f:
             f.write(response.content)
-        playsound('audio.mp3')
+        sound = AudioSegment.from_file("audio.mp3", format="mp3")
+        play(sound)
         return response.content
 
 def send_message(human_input):
