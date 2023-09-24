@@ -9,8 +9,7 @@ import os
 from pydub import AudioSegment
 from pydub.playback import play
 from telegram import Bot, Update
-from telegram.ext import Updater, MessageHandler, CallbackContext
-from telegram.ext.filters import Filters
+
 
 print("Direct import successful!")
 

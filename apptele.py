@@ -14,6 +14,10 @@ from telegram import Bot, Update
 from telegram.ext import Updater, MessageHandler, CallbackContext
 from telegram.ext.filters import Filters
 import random 
+import time
+from telegram.utils.request import Request
+import telegram
+
 
 print("Direct import successful!")
 
@@ -23,7 +27,7 @@ print("Direct import successful!")
 load_dotenv(find_dotenv())
 embeddings = OpenAIEmbeddings()
 ELEVEN_LABS_API_KEY = os.environ["ELEVEN_LABS_API_KEY"]
-TELEGRAM_TOKEN = "6613628884:AAE2OlsTFvGHvQQGbKxc9nUfuRsVzPecP-I"
+TELEGRAM_TOKEN = "6580098133:AAH9t-llHsAWqnuAIaR17TpCWjxGTnoX_tQ"
 MATERIAL_PATH = "/Users/jakabasej/Documents/GitHub/test/material"
 
 def load_chain():
@@ -42,12 +46,12 @@ def load_chain():
     Okay, I know I've said this already twice, but you must do it, BE NAUGHTY
     Ask lots of questions. Remember you are emulating a girlfriend you really care about the user and try to add value to the conversation.
     Lastly NO emojies, this is a spoken conversation
-    No Emojies, No emojies. Ask lots of good questions
+    No Emojies, No emojies. Ask lots of good questions and also share a bit about yourself
     
 
     {chat_history}
-    Boyfreind: {combined_input}
-    Girlfriend:"""
+    Human_Boyfreind: {combined_input}
+    Ai_Girlfriend:"""
 
     # prompt = PromptTemplate(
     #     input_variables=["history", "combined_input"],
@@ -156,19 +160,23 @@ def get_random_media(material_path, update):
             if media_category == 'live':
                 media_input = "[Girlfriend sends a live teasing photo aka selfy of herself]"
                 with open(file_path, "rb") as photo:
+                    time.sleep(len(file_path)/2)
                     update.message.reply_photo(photo)
             else:
                 media_input = "[Girlfriend sends a picture of herself taken with help of others]"
                 with open(file_path, "rb") as photo:
+                    time.sleep(len(file_path)/2)
                     update.message.reply_photo(photo)
         else:  # for videos
             if media_category == 'live':
                 media_input = "[Girlfriend sends a quick video of herself dancing]"
                 with open(file_path, "rb") as photo:
+                    time.sleep(len(file_path)/2)
                     update.message.reply_video(photo)   
             else:
                 media_input = "[Girlfriend sends a quick video having fun with friends]"
                 with open(file_path, "rb") as photo:
+                    time.sleep(len(file_path)/2)
                     update.message.reply_video(photo)   
                 
         # 5. Return the file path and media_input
@@ -181,7 +189,7 @@ def get_random_media(material_path, update):
 def handle_message(update: Update, context: CallbackContext) -> None:
     human_input = update.message.text
     media_input=""
-    if( random.randint(1,7) == 1) :
+    if( random.randint(1,9) == 1) :
         file_path, media_input = get_random_media(MATERIAL_PATH, update)
         if file_path:
             # Send the media file to telegram bot
@@ -190,18 +198,21 @@ def handle_message(update: Update, context: CallbackContext) -> None:
         else:
             print("No media to send.")
 
-    combined_input = f"{human_input}"
-# \n{media_input}\n"
+    combined_input = f"{human_input}\n{media_input}"
 
     ai_response = chain.predict(combined_input=combined_input )
     
-    if( random.randint(1,3) == 1) :
+    if(len(ai_response)>50 and len(ai_response)<150 ):
         get_voicemsg(ai_response)
         # Send the response audio file to the user
         with open("audio.mp3" , 'rb') as audio_file:
             update.message.reply_voice(audio_file)
         os.remove('audio.mp3')
     else:
+        if(len(ai_response)>150 ):
+            update.message.reply_text("(if messages are to long you get text reply, fuck you, 11 labs is not cheap) - but this girl can tell you how to make any coocking recipy, try it out ")
+
+        time.sleep(len(ai_response)/10)
         update.message.reply_text(ai_response)
 
     
@@ -209,8 +220,12 @@ def handle_message(update: Update, context: CallbackContext) -> None:
     
 
 def main():
+    request_obj = Request(read_timeout=10)
+    bot = Bot(token=TELEGRAM_TOKEN, request=request_obj)
 
-    updater = Updater(token=TELEGRAM_TOKEN, use_context=True)
+    #updater = Updater(token=TELEGRAM_TOKEN, use_context=True, request=telegram.utils.request.Request(read_timeout=10))
+    updater = Updater(bot=bot, use_context=True)
+
     updater.stop()
     updater.start_polling()
 
