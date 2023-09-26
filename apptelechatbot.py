@@ -1,22 +1,18 @@
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains import LLMChain
-from dotenv import find_dotenv, load_dotenv
 from langchain.memory import ConversationBufferWindowMemory
-from playsound import playsound
 import requests
 from langchain import OpenAI, LLMChain, PromptTemplate
 import os
-from streamlit_chat import message
-from pydub import AudioSegment
-from pydub.playback import play
-from telegram import Bot, Update
+from telegram import Bot, Updatepi
 from telegram.ext import Updater, MessageHandler, CallbackContext
 from telegram.ext.filters import Filters
 import random 
 import time
 from telegram.utils.request import Request
 import telegram
+from dotenv import find_dotenv, load_dotenv
 
 
 print("Direct import successful!")
@@ -24,8 +20,7 @@ print("Direct import successful!")
 
 
 
-OPENAI_API_KEY="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"
-
+load_dotenv(find_dotenv())
 embeddings = OpenAIEmbeddings()
 
 TELEGRAM_TOKEN = "6475275697:AAFeeVdzc91fvbYrfOxgSrOlVyb95qYDqXw"
