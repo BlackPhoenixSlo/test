@@ -210,7 +210,8 @@ def handle_message(update: Update, context: CallbackContext) -> None:
         os.remove('audio.mp3')
     else:
         if(len(ai_response)>150 ):
-            update.message.reply_text("(if messages are to long you get text reply, fuck you, 11 labs is not cheap) - but this girl can tell you how to make any coocking recipy, try it out ")
+            #update.message.reply_text("(if messages are to long you get text reply, fuck you, 11 labs is not cheap) - but this girl can tell you how to make any coocking recipy, try it out ")
+            pass
 
         time.sleep(len(ai_response)/10)
         update.message.reply_text(ai_response)
