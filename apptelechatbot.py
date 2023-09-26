@@ -24,11 +24,11 @@ print("Direct import successful!")
 
 
 
-load_dotenv(find_dotenv())
+OPENAI_API_KEY="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"
+
 embeddings = OpenAIEmbeddings()
-ELEVEN_LABS_API_KEY = os.environ["ELEVEN_LABS_API_KEY"]
+
 TELEGRAM_TOKEN = "6475275697:AAFeeVdzc91fvbYrfOxgSrOlVyb95qYDqXw"
-MATERIAL_PATH = "/Users/jakabasej/Documents/GitHub/test/material"
 
 def load_chain():
     template = """
